@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "691357059413",
+    "project_id": "pueri-5f41f",
+    "storage_bucket": "pueri-5f41f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691357059413:android:3f072318ed28d6134147dc",
+        "android_client_info": {
+          "package_name": "com.example.pueri_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP2-TIG5NxJbDVK3vYx-d7tru0WrQ-_L0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
