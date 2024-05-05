@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jiffy/jiffy.dart';
 import '../../../app/cubit/cubit.dart';
 import '../../../app/cubit/state.dart';
 import '../../resourses/constants/app_constants.dart';
@@ -19,9 +21,16 @@ class Doctor_Book extends StatefulWidget {
 }
 
 class _Doctor_BookState extends State<Doctor_Book> {
+
+  late AppCubit cubit;
   @override
   void initState() {
-    // TODO: implement initState
+    cubit = AppCubit.get(context);
+    cubit.showBookedDatesForSpecificDay(
+      name: widget.name!,
+      day: 'Sun',
+      timeList: h,
+    );
     super.initState();
   }
 
@@ -32,19 +41,21 @@ class _Doctor_BookState extends State<Doctor_Book> {
     '9:00 PM',
   ];
   List<String> d = [
-    'Sun 4',
-    'Mon 4',
-    'Tue 6',
-    'Wen 7',
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wen',
   ];
-int d_index =0;
-int h_index =0;
+
+  int d_index =0;
+  int h_index = -1;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = AppCubit.get(context);
+
 
         return Scaffold(
             body: SafeArea(
@@ -108,70 +119,166 @@ int h_index =0;
                               style: Styles.reguler_12.copyWith(color: Color(0xff091F44)),
                             ),
                             Image.asset('assets/images/patients.png')
-
-
                           ],
                         ),
-
-
-
-
                       ],
                     ),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  date_widget(text: 'Working Hours', onTap: () {}, list: h),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  date_widget(text: 'Date', onTap: () {}, list: d,indexx:d_index),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-
-                      alignment: Alignment.bottomLeft ,child: Text('Price : 500 EGP')),
-
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AppConstants.defButton(
-                          color: AppColors.primary,
-                          onTap: () {
-                            AppConstants.navigateTo(
-                                context,
-                                PaymentDetailsViewBody(
-                                  bedId: '',
-                                  snapshot: null,
-                                  price: 'Pay : 1000 EGP',
-                                )
-                            );
-                            // AppConstants.navigateTo(context, PaymentsDetailsView(price: 'Pay : 500 EGP',onBack: null,));
-                          },
-                          text: 'Book',
-                          condetion: false,
+                  BlocBuilder<AppCubit,AppState>(
+                    builder: (context, state) =>
+                      Column(
+                      children: [
+                        state is GetDoctorsDatesLoading?
+                        const Center(
+                          child: CircularProgressIndicator(),
+          ) :
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(
+                              h.length, (index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: cubit.isTimeAvaliable[index] == true?()
+                                {
+                                  setState(() {
+                                    h_index = index;
+                                  });
+                                } : null,
+                                child: Container(
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color:
+                                    cubit.isTimeAvaliable[index] == true?
+                                        h_index == index? AppColors.primary : Colors.grey :
+                                        Colors.red,
+                                        // cubit.isTimeAvaliable[index] == true?
+                                    // AppColors.primary : Colors.grey,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Padding(
+                                    padding:const EdgeInsets.all(10.0),
+                                    child: Center(child: Text(
+                                      h[index],
+                                      style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.white),)),
+                                  ),
+                                ),
+                              ),
+                            ),),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: AppConstants.defButton(
-                          color: Colors.white,
-                          onTap: () {
-                            AppConstants.navigateTo(context, Message_Details_Screen(image: '${widget.image}',name: '${widget.name}',));
-                          },
-                          textColor: AppColors.primary,
-                          text: 'Massage',
-                          condetion:false,
+                        const SizedBox(
+                          height: 16,
                         ),
-                      ),
-                    ],
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(
+                                d.length, (index) => Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: ()async
+                                    {
+                                      setState(() {
+                                        d_index = index;
+                                      });
+                                      await cubit.showBookedDatesForSpecificDay(
+                                        name: widget.name!,
+                                        day: d[index],
+                                        timeList: h,
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                    color: d_index == index? AppColors.primary : Colors.grey,
+                                    borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Padding(
+                                    padding:const EdgeInsets.all(10.0),
+                                    child: Center(child: Text(
+                                      d[index],
+                                      style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.white),)),
+                                      ),
+                                    ),
+                                  ),
+                                ),),
+                          ),
+                        ),
+
+
+                        // date_widget(text: 'Working Hours', onTap: () {}, list: h),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        // date_widget(text: 'Date', onTap: () {}, list: d,indexx:d_index),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Align(
+
+                            alignment: Alignment.bottomLeft ,child: Text('Price : 500 EGP')),
+
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child:AppConstants.defButton(
+                                color: AppColors.primary,
+                                onTap: ()async {
+
+                                  String dateTime = d[d_index] + h[h_index];
+
+
+                                  // String time = Jiffy.now().format(pattern: 'EEEHH:mm a');
+                                  // print(time);
+
+
+                                  await cubit.bookDateWithDoctor(
+                                      name: widget.name!,
+                                      day: d[d_index],
+                                      time: h[h_index],
+                                  );
+
+
+
+                                  // AppConstants.navigateTo(
+                                  //     context,
+                                  //     PaymentDetailsViewBody(
+                                  //       bedId: '',
+                                  //       snapshot: null,
+                                  //       price: 'Pay : 1000 EGP',
+                                  //     )
+                                  // );
+                                  // AppConstants.navigateTo(context, PaymentsDetailsView(price: 'Pay : 500 EGP',onBack: null,));
+                                },
+                                text: 'Book',
+                                condetion: false,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: AppConstants.defButton(
+                                color: Colors.white,
+                                onTap: () {
+                                  AppConstants.navigateTo(context, Message_Details_Screen(image: '${widget.image}',name: '${widget.name}',));
+                                },
+                                textColor: AppColors.primary,
+                                text: 'Massage',
+                                condetion:false,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -219,58 +326,63 @@ int h_index =0;
     );
   }
 
-  Widget date_widget({onTap, text, required List<String> list,indexx}) => Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                text,
-                style: Styles.semi_bold_14,
-              ),
-
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 52,
-            width: double.infinity,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: list.length,
-              itemBuilder: (context, index) {
-                return InkWell(onTap: (){
-                  setState(() {
-                    if( text =='Date')
-                    d_index =index;
-                    if( text !='Date')
-                    h_index =index;
-                   print(d_index==index);
-                  });
-
-                },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                        color:text =='Date' ?d_index==index?  AppColors.primary:Colors.grey :  h_index ==index ?  AppColors.primary:Colors.grey,
-                        borderRadius: BorderRadius.circular(18)),
-                    height: 50,
-                    width: 98,
-                    child: Center(
-                      child: Text(
-                        '${list[index]}',
-                        style: Styles.reguler_12
-                            .copyWith(fontSize: 17, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          )
-        ],
-      );
+  // Widget date_widget({onTap, text, required List<String> list,indexx}) => Column(
+  //       children: [
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Text(
+  //               text,
+  //               style: Styles.semi_bold_14,
+  //             ),
+  //
+  //           ],
+  //         ),
+  //         const SizedBox(
+  //           height: 20,
+  //         ),
+  //         SizedBox(
+  //           height: 52,
+  //           width: double.infinity,
+  //           child: ListView.builder(
+  //             scrollDirection: Axis.horizontal,
+  //             itemCount: list.length,
+  //             itemBuilder: (context, index) {
+  //               return InkWell(
+  //                 onTap:
+  //                 // cubit.bookedDates[index] == list[index]?
+  //                 //     null :
+  //                     () // should add day and time instead of DateTime
+  //               {
+  //                 setState(() {
+  //                   if( text =='Date')
+  //                   d_index = index;
+  //                   if( text !='Date')
+  //                   h_index = index;
+  //                 });
+  //               },
+  //                 child: Container(
+  //                   margin: const EdgeInsets.symmetric(horizontal: 10),
+  //                   padding: const EdgeInsets.symmetric(horizontal: 5),
+  //                   decoration: BoxDecoration(
+  //                       color:text =='Date' ?
+  //                       d_index==index? AppColors.primary : Colors.grey :  h_index ==index ?
+  //                       AppColors.primary : Colors.grey,
+  //                       borderRadius: BorderRadius.circular(18)),
+  //                   height: 50,
+  //                   width: 98,
+  //                   child: Center(
+  //                     child: Text(
+  //                       list[index],
+  //                       style: Styles.reguler_12
+  //                           .copyWith(fontSize: 17, color: Colors.white),
+  //                     ),
+  //                   ),
+  //                 ),
+  //               );
+  //             },
+  //           ),
+  //         )
+  //       ],
+  //     );
 }

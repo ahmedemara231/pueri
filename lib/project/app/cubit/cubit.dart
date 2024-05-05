@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,11 +27,15 @@ class AppCubit extends Cubit<AppState> {
     Message_Screen(),
     Profile_Screen()
   ];
+
+
   String place_filter = 'Kafr ElSheikh';
+
   void ChangeBottomBarIndex(index) {
     bottomNavIndex = index;
     emit(ChangeBottomNavBarState());
   }
+
 
   void ChangeLocation(place) {
     place_filter = place;
@@ -357,6 +360,111 @@ class AppCubit extends Cubit<AppState> {
       emit(get_Hos_ErrorState());
     });
   }
+
+
+
+  
+  Future<void> bookDateWithDoctor({
+    required String name,
+    required String day,
+    required String time,
+})async
+  {
+    emit(BookDateWithDoctorLoading());
+
+    await FirebaseFirestore.instance
+        .collection('doctorsDates')
+        .add(
+        {
+          'doctorName' : name,
+          'userId' : '',
+          'day' : day,
+          'time' : time,
+        },
+    ).then((value)
+    {
+      log('Done');
+      emit(BookDateWithDoctorSuccess());
+    }).catchError((error)
+    {
+      emit(BookDateWithDoctorError());
+    });
+  }
+
+  // Future<void> getDoctorsDates(String doctorName)async
+  // {
+  //   log(doctorName);
+  //   emit(GetDoctorsDatesLoading());
+  //   await FirebaseFirestore.instance
+  //       .collection('doctorsDates')
+  //       .where('doctorName',isEqualTo: doctorName)
+  //       .get()
+  //       .then((value) {
+  //     value.docs.forEach((element) {
+  //
+  //     });
+  //     log('$bookedDates');
+  //     emit(GetDoctorsDatesSuccess());
+  //   }).catchError((error){
+  //     emit(GetDoctorsDatesError());
+  //   });
+  // }
+
+  List<bool> isTimeAvaliable = [];
+  List<String> bookedDates = [];
+  Future<void> showBookedDatesForSpecificDay({
+    required String name,
+    required String day,
+    required List<String> timeList
+})async
+  {
+    emit(GetDoctorsDatesLoading());
+    bookedDates = [];
+    isTimeAvaliable = [];
+    await FirebaseFirestore.instance
+        .collection('doctorsDates')
+        .where('doctorName',isEqualTo: name)
+        .where('day',isEqualTo: day)
+        .get()
+        .then((value)
+    {
+      value.docs.forEach((element) {
+        bookedDates.add(element.data()['time']);
+      });
+      log('$bookedDates');
+
+
+      if(bookedDates.isEmpty)
+        {
+          timeList.forEach((element) {
+            isTimeAvaliable.add(true);
+          });
+        }
+      else{
+        for(String time in timeList)
+        {
+          for(String bookedTime in bookedDates)
+          {
+            if(time == bookedTime)
+            {
+              isTimeAvaliable.add(false);
+            }
+            else{
+              isTimeAvaliable.add(true);
+            }
+          }
+        }
+      }
+
+
+      log('the bool list is $isTimeAvaliable');
+
+      emit(GetDoctorsDatesSuccess());
+    });
+  }
+
+
+
 
   void make_favorite(id) {
     emit(makeFavoriteLoadingState());

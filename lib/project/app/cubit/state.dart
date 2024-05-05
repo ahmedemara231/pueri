@@ -30,6 +30,17 @@ class Upload_Hos_ErrorState extends AppState {}
 class get_Hos_LoadingState extends AppState {}
 class get_Hos_SucssesState extends AppState {}
 class get_Hos_ErrorState extends AppState {}
+
+//get doctors dates
+class GetDoctorsDatesLoading extends AppState {}
+class GetDoctorsDatesSuccess extends AppState {}
+class GetDoctorsDatesError extends AppState {}
+
+//book date with doctor
+class BookDateWithDoctorLoading extends AppState {}
+class BookDateWithDoctorSuccess extends AppState {}
+class BookDateWithDoctorError extends AppState {}
+
 //make favorite
 class makeFavoriteLoadingState extends AppState {}
 class makeFavoriteSucssesState extends AppState {}

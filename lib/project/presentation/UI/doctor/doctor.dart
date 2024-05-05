@@ -27,7 +27,7 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -176,19 +176,15 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
                       SizedBox(
                         height: 10,
                       ),
-                      cubit.toprated.isEmpty
-                          ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                          : Expanded(
+                     Expanded(
                         child: ListView.builder(
-                          itemCount: AppConstants.doctors.length-1,
+                          itemCount: AppConstants.doctors.length,
                           itemBuilder: (context, index) {
-                            print(searchControler.text);
-                            final hospital = cubit.toprated[index];
-                            if (searchControler.text.isNotEmpty && !hospital.hospital_name!.contains(searchControler.text)) { // <-- Add this line
-                              return SizedBox.shrink(); // Skip this item if it does not match the search query
-                            }
+                            // print(searchControler.text);
+                            // final hospital = cubit.toprated[index];
+                            // if (searchControler.text.isNotEmpty && !hospital.hospital_name!.contains(searchControler.text)) { // <-- Add this line
+                            //   return SizedBox.shrink(); // Skip this item if it does not match the search query
+                            // }
                             return Doctor_widget(
                               name:AppConstants.doctors[index].name ,
                               image_link:AppConstants.doctors[index].image,

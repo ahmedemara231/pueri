@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pueri_project/project/presentation/UI/home/home.dart';
 import 'package:pueri_project/project/presentation/UI/login/login_screen.dart';
+import '../presentation/UI/doctor/doctor.dart';
 import '../presentation/UI/splash/splash.dart';
 import 'cubit/cubit.dart';
 import 'cubit/state.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(
-            home: HomeScreen(),
+            home: Doctor_Screen(),
             debugShowCheckedModeBanner: false,
           );
         },
