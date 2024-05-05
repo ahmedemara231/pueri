@@ -441,19 +441,17 @@ class AppCubit extends Cubit<AppState> {
           });
         }
       else{
+
         for(String time in timeList)
-        {
-          for(String bookedTime in bookedDates)
           {
-            if(time == bookedTime)
-            {
-              isTimeAvaliable.add(false);
-            }
+            if(bookedDates.contains(time))
+              {
+                isTimeAvaliable.add(false);
+              }
             else{
               isTimeAvaliable.add(true);
             }
           }
-        }
       }
 
 
