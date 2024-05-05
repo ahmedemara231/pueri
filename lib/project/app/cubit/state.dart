@@ -36,6 +36,15 @@ class GetDoctorsDatesLoading extends AppState {}
 class GetDoctorsDatesSuccess extends AppState {}
 class GetDoctorsDatesError extends AppState {}
 
+//get doctors booking
+class GetAllDoctorsBookingLoading extends AppState {}
+class GetAllDoctorsBookingSuccess extends AppState {}
+class GetAllDoctorsBookingError extends AppState {}
+
+//delete
+class DeleteDoctorBookingSuccess extends AppState {}
+
+
 //book date with doctor
 class BookDateWithDoctorLoading extends AppState {}
 class BookDateWithDoctorSuccess extends AppState {}

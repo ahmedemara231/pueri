@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pueri_project/project/presentation/UI/admain/password.dart';
 import 'package:pueri_project/project/presentation/UI/home/home.dart';
 import 'package:pueri_project/project/presentation/UI/login/login_screen.dart';
 import '../presentation/UI/doctor/doctor.dart';

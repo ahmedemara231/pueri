@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jiffy/jiffy.dart';
 import '../../../app/cubit/cubit.dart';
 import '../../../app/cubit/state.dart';
 import '../../resourses/constants/app_constants.dart';
@@ -232,19 +233,17 @@ class _Doctor_BookState extends State<Doctor_Book> {
                                 color: AppColors.primary,
                                 onTap: ()async {
 
-                                  String dateTime = d[d_index] + h[h_index];
-
-
-                                  // String time = Jiffy.now().format(pattern: 'EEEHH:mm a');
-                                  // print(time);
-
-
                                   await cubit.bookDateWithDoctor(
                                       name: widget.name!,
                                       day: d[d_index],
                                       time: h[h_index],
                                   );
 
+                                  await cubit.showBookedDatesForSpecificDay(
+                                    name: widget.name!,
+                                    day: d[d_index],
+                                    timeList: h,
+                                  );
 
 
                                   // AppConstants.navigateTo(

@@ -25,12 +25,6 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
     AppCubit.get(context).getUserData(FirebaseAuth.instance.currentUser?.uid);
   }
 
-  @override
-  void initState() {
-
-    super.initState();
-  }
-
   var searchControler = TextEditingController();
 
   @override
@@ -41,10 +35,14 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
         var cubit = AppCubit.get(context);
 
         return Scaffold(
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.add))
+            ],
+          ),
             body:
-            // Container(
-            //   color: Colors.white,
-            // )
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),

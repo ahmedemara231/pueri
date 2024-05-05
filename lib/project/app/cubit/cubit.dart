@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pueri_project/project/app/cubit/state.dart';
+import 'package:pueri_project/project/presentation/UI/admain/booking_model.dart';
 import '../../presentation/UI/doctor/doctor.dart';
 import '../../presentation/UI/home/home.dart';
 import '../../presentation/UI/login/login_screen.dart';
@@ -462,7 +463,44 @@ class AppCubit extends Cubit<AppState> {
   }
 
 
+  List<DoctorBook> doctorsBooking = [];
+  Future<void> getAllDoctorsBooks()async
+  {
+    emit(GetAllDoctorsBookingLoading());
+    await FirebaseFirestore.instance
+        .collection('doctorsDates')
+        .get()
+        .then((value)
+    {
+      value.docs.forEach((element) {
+        doctorsBooking.add(
+            DoctorBook(
+              doctorName: element.data()['doctorName'],
+              uId: element.data()['userId'],
+              day: element.data()['day'],
+              time: element.data()['time'],
+              bookId: element.id,
+            ),
+        );
+      });
+      emit(GetAllDoctorsBookingSuccess());
+      print(doctorsBooking.length);
+    }).catchError((error){
+      emit(GetAllDoctorsBookingError());
+    });
+  }
 
+  Future<void> deleteDoctorBooking(int index)async
+  {
+    await FirebaseFirestore.instance
+        .collection('doctorsDates')
+        .doc(doctorsBooking[index].bookId)
+        .delete().then((value) {
+      log('Done');
+      doctorsBooking.removeWhere((element) => element.bookId == doctorsBooking[index].bookId);
+      emit(DeleteDoctorBookingSuccess());
+    });
+  }
 
   void make_favorite(id) {
     emit(makeFavoriteLoadingState());
