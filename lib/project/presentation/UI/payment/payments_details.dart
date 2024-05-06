@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:pueri_project/project/presentation/UI/payment/widgets/customButton.dart';
 import 'package:pueri_project/project/presentation/UI/payment/widgets/custom_creditcard.dart';
 
+import '../../../app/cubit/cubit.dart';
 import '../../resourses/styles/colors.dart';
 import '../../resourses/styles/styles.dart';
 
@@ -35,10 +36,20 @@ class PaymentDetailsViewBody extends StatefulWidget {
     required this.price,
     required this.snapshot,
     required this.bedId,
+    this.isDoctorBook = false,
+    this.doctorName,
+    this.day,
+    this.time,
+    this.timeList,
   });
   String? price;
   AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>? snapshot;
   String? bedId;
+  bool isDoctorBook;
+  String? doctorName;
+  String? day;
+  String? time;
+  List<String>? timeList;
 
   @override
   State<PaymentDetailsViewBody> createState() => _PaymentDetailsViewBodyState();
@@ -53,7 +64,6 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
     required AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot
   })async
   {
-    print('=======================================');
     print(snapshot.data?.data()?['avilable']);
 
     await FirebaseFirestore.instance.collection('hospitals').doc(bedId).update(
@@ -62,14 +72,20 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
         }
     );
   }
+
+  late AppCubit cubit;
+  @override
+  void initState() {
+    cubit = AppCubit.get(context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(child: SizedBox(height: 20,)),
+            const SliverToBoxAdapter(child: SizedBox(height: 20,)),
             SliverToBoxAdapter(child:  Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
@@ -98,9 +114,30 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom:12,right: 16,left: 16 ),
                       child: customButton(onTap: ()async {
-                        await decrementBedsCount(bedId: widget.bedId!, snapshot: widget.snapshot!).then((value) {
-                          Navigator.pop(context);
-                        });
+                        if(widget.isDoctorBook == false)
+                          {
+                            await decrementBedsCount(
+                                bedId: widget.bedId!,
+                                snapshot: widget.snapshot!
+                            ).then((value) {
+                              Navigator.pop(context);
+                            });
+                          }
+                        else{
+                          await cubit.bookDateWithDoctor(
+                              name: widget.doctorName!,
+                              day: widget.day!,
+                              time: widget.time!,
+                          );
+
+                          await cubit.showBookedDatesForSpecificDay(
+                            name: widget.doctorName!,
+                            day: widget.day!,
+                            timeList: widget.timeList!,
+                          ).then((value) {
+                            Navigator.pop(context);
+                          });
+                        }
                       }, title: '${widget.price}'),
                     ))),
           ],

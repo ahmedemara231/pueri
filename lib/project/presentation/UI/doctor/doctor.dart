@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pueri_project/project/presentation/UI/admain/password.dart';
 import '../../../app/cubit/cubit.dart';
 import '../../../app/cubit/state.dart';
 import '../../resourses/constants/app_constants.dart';
@@ -38,7 +39,9 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
           appBar: AppBar(
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordScreen(),));
+                  },
                   icon: Icon(Icons.add))
             ],
           ),

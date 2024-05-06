@@ -233,28 +233,19 @@ class _Doctor_BookState extends State<Doctor_Book> {
                                 color: AppColors.primary,
                                 onTap: ()async {
 
-                                  await cubit.bookDateWithDoctor(
-                                      name: widget.name!,
-                                      day: d[d_index],
-                                      time: h[h_index],
+                                  AppConstants.navigateTo(
+                                      context,
+                                      PaymentDetailsViewBody(
+                                        bedId: '',
+                                        snapshot: null,
+                                        price: 'Pay : 1000 EGP',
+                                        isDoctorBook: true,
+                                        doctorName: widget.name,
+                                        day: d[d_index],
+                                        time: h[h_index],
+                                        timeList: h,
+                                      )
                                   );
-
-                                  await cubit.showBookedDatesForSpecificDay(
-                                    name: widget.name!,
-                                    day: d[d_index],
-                                    timeList: h,
-                                  );
-
-
-                                  // AppConstants.navigateTo(
-                                  //     context,
-                                  //     PaymentDetailsViewBody(
-                                  //       bedId: '',
-                                  //       snapshot: null,
-                                  //       price: 'Pay : 1000 EGP',
-                                  //     )
-                                  // );
-                                  // AppConstants.navigateTo(context, PaymentsDetailsView(price: 'Pay : 500 EGP',onBack: null,));
                                 },
                                 text: 'Book',
                                 condetion: false,
