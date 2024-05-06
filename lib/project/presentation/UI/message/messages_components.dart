@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pueri_project/project/presentation/resourses/network/local/casheHelper.dart';
 import '../../resourses/styles/colors.dart';
 import '../../resourses/styles/styles.dart';
 
@@ -49,7 +50,7 @@ class Messages_widget extends StatelessWidget {
                   style: Styles.bold_16.copyWith(color: Colors.black),
                 ),
                 Text(
-                  '${message}',
+                  'Welcome ${CacheHelper.sharedPreferences.getStringList('userData')![1]} !',
                   style: Styles.reguler_12.copyWith(color: Colors.grey),
                 ),
               ],
@@ -59,32 +60,11 @@ class Messages_widget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  '${date}',
-                  style: Styles.reguler_12.copyWith(color: Colors.black),
-                ),
+
                 SizedBox(
                   height: 15,
                 ),
-                num! >=1 ?  Container(
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: AppColors.primary),
-                child: Center(
-                  child:  Text(
-                    '${num}',
-                    style: Styles.reguler_12.copyWith(color: Colors.white),
-                  ),
-                ),
-                ):Container(  height: 20,
-                  width: 20,),
-
               ],
-            ),
-            SizedBox(
-              width: 10,
             ),
           ],
         ),

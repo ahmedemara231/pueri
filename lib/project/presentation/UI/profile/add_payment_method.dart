@@ -32,31 +32,31 @@ import '../../../app/cubit/cubit.dart';
 import '../../resourses/styles/colors.dart';
 import '../../resourses/styles/styles.dart';
 
-class PaymentDetailsViewBody extends StatefulWidget {
-  PaymentDetailsViewBody({
-    required this.price,
-    required this.snapshot,
-    required this.bedId,
-    this.isDoctorBook = false,
-    this.doctorName,
-    this.day,
-    this.time,
-    this.timeList,
-  });
-  String? price;
-  AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>? snapshot;
-  String? bedId;
-  bool isDoctorBook;
-  String? doctorName;
-  String? day;
-  String? time;
-  List<String>? timeList;
+class AddPaymentMethod extends StatefulWidget {
+  // AddPaymentMethod({
+  //   required this.price,
+  //   required this.snapshot,
+  //   required this.bedId,
+  //   this.isDoctorBook = false,
+  //   this.doctorName,
+  //   this.day,
+  //   this.time,
+  //   this.timeList,
+  // });
+  // String? price;
+  // AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>? snapshot;
+  // String? bedId;
+  // bool isDoctorBook;
+  // String? doctorName;
+  // String? day;
+  // String? time;
+  // List<String>? timeList;
 
   @override
-  State<PaymentDetailsViewBody> createState() => _PaymentDetailsViewBodyState();
+  State<AddPaymentMethod> createState() => _AddPaymentMethodState();
 }
 
-class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
+class _AddPaymentMethodState extends State<AddPaymentMethod> {
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode =AutovalidateMode.disabled;
 
@@ -103,7 +103,8 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
                 ],
               ),
             ),),
-            SliverToBoxAdapter(child: CustomCreditcard(
+            SliverToBoxAdapter(
+                child: CustomCreditcard(
                 formKey: formKey,
                 autovalidateMode: autovalidateMode
             )),
@@ -115,33 +116,9 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom:12,right: 16,left: 16 ),
                       child: customButton(onTap: ()async {
-                        if(widget.isDoctorBook == false)
-                          {
-                            MyToast.showToast(context, msg: 'Hospital Booked Successfully',color: AppColors.primary);
-                            await decrementBedsCount(
-                                bedId: widget.bedId!,
-                                snapshot: widget.snapshot!
-                            ).then((value) {
-                              Navigator.pop(context);
-                            });
-                          }
-                        else{
-                          MyToast.showToast(context, msg: 'Doctor Booked Successfully',color: AppColors.primary);
-                          await cubit.bookDateWithDoctor(
-                              name: widget.doctorName!,
-                              day: widget.day!,
-                              time: widget.time!,
-                          );
-
-                          await cubit.showBookedDatesForSpecificDay(
-                            name: widget.doctorName!,
-                            day: widget.day!,
-                            timeList: widget.timeList!,
-                          ).then((value) {
-                            Navigator.pop(context);
-                          });
-                        }
-                      }, title: '${widget.price} EGP'),
+                        MyToast.showToast(context, msg: 'Card added Successfully');
+                      }, title: 'Add Card'
+                      ),
                     ))),
           ],
         ),

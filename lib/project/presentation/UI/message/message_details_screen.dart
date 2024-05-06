@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pueri_project/project/presentation/resourses/constants/app_constants.dart';
 import '../../../app/cubit/cubit.dart';
 import '../../../app/cubit/state.dart';
 import '../../resourses/styles/colors.dart';
@@ -18,12 +19,6 @@ class Message_Details_Screen extends StatefulWidget {
 
 class _Message_Details_ScreenState extends State<Message_Details_Screen> {
   List<String> messages = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   var controler = TextEditingController();
 
@@ -91,10 +86,7 @@ class _Message_Details_ScreenState extends State<Message_Details_Screen> {
               ),
               Column(
                 children: [
-                  message_widget('To day'),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: message_widget('مرحبا بك')),
+                  message_widget('Today'),
                 ],
               ),
               Expanded(
@@ -165,7 +157,13 @@ class _Message_Details_ScreenState extends State<Message_Details_Screen> {
                         )),
                     InkWell(
                       onTap: (){
-                        messages.add(controler.text);
+                        if(controler.text.isEmpty)
+                          {
+                            MyToast.showToast(context, msg: 'Write message!',color: Colors.red);
+                          }
+                        else{
+                          messages.add(controler.text);
+                        }
                         setState(() {
                           controler.clear();
                         });

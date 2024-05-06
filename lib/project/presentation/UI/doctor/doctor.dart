@@ -36,15 +36,7 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
         var cubit = AppCubit.get(context);
 
         return Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordScreen(),));
-                  },
-                  icon: Icon(Icons.add))
-            ],
-          ),
+          appBar: AppBar(),
             body:
             SafeArea(
               child: Padding(

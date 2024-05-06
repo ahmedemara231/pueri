@@ -299,49 +299,6 @@ class _Edit_ScreenState extends State<Edit_Screen> {
                                 SizedBox(
                                   height: 20,
                                 ),
-                                Text(
-                                  'Mobile ',
-                                  style: Styles.semi_bold_14,
-                                  textAlign: TextAlign.start,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                TextFormField(
-                                  style: Styles.semi_bold_14,
-                                  controller: phone_Controller,
-                                  maxLines: 1,
-                                  minLines: null,
-                                  validator: (value) {
-                                    if (value == null || value
-                                        .trim()
-                                        .isEmpty) {
-                                      return 'please Enter phone Number';
-                                    }
-
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(12),
-                                          borderSide: BorderSide(
-                                              color: AppColors.primary)),
-                                      errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(12),
-                                          borderSide:
-                                          BorderSide(color: Colors.red)),
-                                      disabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(12),
-                                          borderSide: BorderSide(
-                                              color: AppColors.primary)),
-                                      hintText: '01029189889',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(12))),
-                                ),
                                 SizedBox(
                                   height: 20,
                                 ),

@@ -54,22 +54,11 @@ class Home_widget extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.sizeOf(context).width -100,
                 child: Text(
-                  ' ${location}',
+                  location!,
                   style: Styles.semi_bold_16.copyWith(color: Colors.black,fontSize: 11,overflow: TextOverflow.ellipsis),maxLines: 1,
                 ),
               ),
 
-            ],
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [   SizedBox(
-              width: 3,
-            ),
-              SvgPicture.asset('assets/icons/watch.svg',color: Colors.black,height: 16,),
             ],
           ),
           SizedBox(

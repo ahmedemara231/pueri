@@ -17,27 +17,27 @@ void main() {
       );
 
       await CacheHelper.Init();
-      FirebaseMessaging.instance.getInitialMessage().then((message) {
-        // Handle message when the app is in the background or terminated
-        if (message != null) {
-          // Handle notification message
-          AppConstants.handleNotification(message);
-        }
-      });
+      // FirebaseMessaging.instance.getInitialMessage().then((message) {
+      //   // Handle message when the app is in the background or terminated
+      //   if (message != null) {
+      //     // Handle notification message
+      //     AppConstants.handleNotification(message);
+      //   }
+      // });
       // Handle incoming messages
-      FirebaseMessaging.onMessage.listen((message) {
-        // Handle notification message
-        AppConstants. handleNotification(message);
-      });
+      // FirebaseMessaging.onMessage.listen((message) {
+      //   // Handle notification message
+      //   AppConstants. handleNotification(message);
+      // });
       // Handle messages clicked / opened from notification tray
-      FirebaseMessaging.onMessageOpenedApp.listen((message) {
-        // Handle notification message
-        AppConstants.handleNotification(message);
-      });
+      // FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      //   // Handle notification message
+      //   AppConstants.handleNotification(message);
+      // });
       AppConstants.onboarding = CacheHelper.getData(key: 'onboard') ?? false;
       print(AppConstants.onboarding);
-      String? fcmToken = await FirebaseMessaging.instance.getToken();
-      print(' token : ${fcmToken}');
+      // String? fcmToken = await FirebaseMessaging.instance.getToken();
+      // print(' token : ${fcmToken}');
       runApp(MyApp());
     },
     blocObserver: MyBlocObserver(),

@@ -2,7 +2,6 @@ class Hospital_Model {
   dynamic? rate;
   String? id; // You can use either int or String, depending on your use case
   int? avilable;
-
   bool? supported;
   String? location;
   String? price;
@@ -29,7 +28,7 @@ class Hospital_Model {
       avilable: json['avilable'],
       hospital_name: json['hospital_name'],
       id: id,
-      location: json['location'],
+      location: json['location'] + ', ' + json['subLocation'],
       price: json['price'],
       rate: json['rate'],
       topRated: json['topRated'],

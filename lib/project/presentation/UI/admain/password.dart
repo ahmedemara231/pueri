@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:pueri_project/project/presentation/resourses/constants/app_constants.dart';
 import 'package:pueri_project/project/presentation/resourses/styles/colors.dart';
 
 import 'all_doctors_books.dart';
@@ -16,7 +17,8 @@ class PasswordScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Enter password',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20,),),
+            Text('Password',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20,color: AppColors.primary),),
+            const SizedBox(height: 30,),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Pinput(

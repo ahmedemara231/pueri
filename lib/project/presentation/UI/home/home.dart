@@ -78,20 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         InkWell(
-                            onTap: (){
-                              Hospital_Model model_upload = Hospital_Model(
-                                topRated: true,
-                                avilable: 4,
-                                price: '1000',
-                                hospital_name: 'katr ElSheikh  Hospital',
-                                location:
-                                'Kafr El Sheikh, Kafr El Sheikh, ElGish Street',
-                                id: '',
-                                rate: 3,
-                                supported: false, location_place: 'Fayoum',
-                              );
-                              cubit.Upload_Hospital(model_upload);
-                            },
+                            onTap: null,
                             child: Image.asset('assets/images/logo.png')),
                       ],
                     ),
@@ -146,14 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(25))),
                         ),
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      InkWell(
-                          onTap: (){
-                            AppConstants.navigateTo(context, Notification_Screen());
-                          },
-                          child: Image.asset('assets/images/notification.png'))
                     ],
                   ),
                   SizedBox(
@@ -185,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Hight Rated Nursery',
+                        'High Rated Nursery',
                         style: Styles.semi_bold_14,
                       ),
                       InkWell(

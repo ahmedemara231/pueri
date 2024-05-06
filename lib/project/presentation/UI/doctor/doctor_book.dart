@@ -29,28 +29,27 @@ class _Doctor_BookState extends State<Doctor_Book> {
     cubit = AppCubit.get(context);
     cubit.showBookedDatesForSpecificDay(
       name: widget.name!,
-      day: 'Sun',
+      day: 'Sat',
       timeList: h,
     );
     super.initState();
   }
 
   List<String> h = [
-    '10:00 AM',
-    '11:00 AM',
-    '8:00 PM',
-    '9:00 PM',
+    '10:11 AM',
+    '2:3 PM',
+    '6:7 PM',
   ];
   List<String> d = [
-    'Sun',
+    'Sat',
     'Mon',
-    'Tue',
     'Wen',
   ];
 
   int d_index =0;
   int h_index = -1;
 
+  String price = '250';
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppState>(
@@ -73,14 +72,14 @@ class _Doctor_BookState extends State<Doctor_Book> {
                             Navigator.pop(context);
                           },
                           child: Image.asset('assets/images/back_arrow.png')),
-                      InkWell(
-                          onTap: () {
-                            AppConstants.navigateTo(context, Message_Details_Screen(image: '${widget.image}',name: '${widget.name}'));
-                          },
-                          child: Icon(
-                            Icons.email_rounded,
-                            color: AppColors.primary,
-                          )),
+                      // InkWell(
+                      //     onTap: () {
+                      //       AppConstants.navigateTo(context, Message_Details_Screen(image: '${widget.image}',name: '${widget.name}'));
+                      //     },
+                      //     child: Icon(
+                      //       Icons.email_rounded,
+                      //       color: AppColors.primary,
+                      //     )),
                     ],
                   ),
                   SizedBox(
@@ -135,7 +134,7 @@ class _Doctor_BookState extends State<Doctor_Book> {
                         state is GetDoctorsDatesLoading?
                         const Center(
                           child: CircularProgressIndicator(),
-          ) :
+                        ) :
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
@@ -221,7 +220,7 @@ class _Doctor_BookState extends State<Doctor_Book> {
                         ),
                         Align(
 
-                            alignment: Alignment.bottomLeft ,child: Text('Price : 500 EGP')),
+                            alignment: Alignment.bottomLeft ,child: Text('Price : $price')),
 
                         SizedBox(
                           height: 20,
@@ -238,7 +237,7 @@ class _Doctor_BookState extends State<Doctor_Book> {
                                       PaymentDetailsViewBody(
                                         bedId: '',
                                         snapshot: null,
-                                        price: 'Pay : 1000 EGP',
+                                        price: price,
                                         isDoctorBook: true,
                                         doctorName: widget.name,
                                         day: d[d_index],

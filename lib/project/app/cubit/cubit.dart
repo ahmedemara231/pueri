@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pueri_project/project/app/cubit/state.dart';
 import 'package:pueri_project/project/presentation/UI/admain/booking_model.dart';
+import 'package:pueri_project/project/presentation/resourses/network/local/casheHelper.dart';
 import '../../presentation/UI/doctor/doctor.dart';
 import '../../presentation/UI/home/home.dart';
 import '../../presentation/UI/login/login_screen.dart';
@@ -24,7 +25,6 @@ class AppCubit extends Cubit<AppState> {
   List<Widget> App_Screens = [
     HomeScreen(),
     Doctor_Screen(),
-    Watch_Screen(),
     Message_Screen(),
     Profile_Screen()
   ];
@@ -158,6 +158,16 @@ class AppCubit extends Cubit<AppState> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
+        CacheHelper.sharedPreferences.setStringList(
+            'userData',
+            [
+              user_model!.id!,
+              user_model!.first_name!,
+              user_model!.last_name!,
+              user_model!.email!,
+            ],
+        );
+        print(CacheHelper.sharedPreferences.getStringList('userData')?[0]);
         emit(GetUserDataLodingState());
         getUserData(value.user?.uid);
         emit(SignINSucssesState());
@@ -363,8 +373,6 @@ class AppCubit extends Cubit<AppState> {
   }
 
 
-
-  
   Future<void> bookDateWithDoctor({
     required String name,
     required String day,
@@ -377,8 +385,10 @@ class AppCubit extends Cubit<AppState> {
         .collection('doctorsDates')
         .add(
         {
+          'userId' : CacheHelper.sharedPreferences.getStringList('userData')![0],
+          'userName' : CacheHelper.sharedPreferences.getStringList('userData')![1] + '  ' + CacheHelper.sharedPreferences.getStringList('userData')![2],
+          'userEmail' : CacheHelper.sharedPreferences.getStringList('userData')![3],
           'doctorName' : name,
-          'userId' : '',
           'day' : day,
           'time' : time,
         },
@@ -434,7 +444,6 @@ class AppCubit extends Cubit<AppState> {
       });
       log('$bookedDates');
 
-
       if(bookedDates.isEmpty)
         {
           timeList.forEach((element) {
@@ -467,6 +476,7 @@ class AppCubit extends Cubit<AppState> {
   Future<void> getAllDoctorsBooks()async
   {
     emit(GetAllDoctorsBookingLoading());
+    doctorsBooking = [];
     await FirebaseFirestore.instance
         .collection('doctorsDates')
         .get()
@@ -479,6 +489,7 @@ class AppCubit extends Cubit<AppState> {
               uId: element.data()['userId'],
               day: element.data()['day'],
               time: element.data()['time'],
+              userName: element.data()['userName'],
               bookId: element.id,
             ),
         );

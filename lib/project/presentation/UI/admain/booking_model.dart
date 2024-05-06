@@ -5,6 +5,7 @@ class DoctorBook
   String day;
   String time;
   String bookId;
+  String userName;
 
   DoctorBook({
     required this.doctorName,
@@ -12,5 +13,6 @@ class DoctorBook
     required this.day,
     required this.time,
     required this.bookId,
+    required this.userName,
 });
 }

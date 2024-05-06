@@ -245,9 +245,7 @@ class _ChangePassword_ScreenState extends State<ChangePassword_Screen> {
                                   height: 20,
                                 ),
                                 InkWell(
-                                  onTap: () {
-
-                                  },
+                                  onTap: () {},
                                   child: Container(
                                     width: double.infinity,
                                     height: 40,

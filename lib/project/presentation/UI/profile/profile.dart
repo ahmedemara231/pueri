@@ -4,11 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pueri_project/project/presentation/UI/profile/add_payment_method.dart';
+import 'package:pueri_project/project/presentation/resourses/network/local/casheHelper.dart';
 import '../../../app/cubit/cubit.dart';
 import '../../../app/cubit/state.dart';
 import '../../resourses/constants/app_constants.dart';
 import '../../resourses/styles/colors.dart';
 import '../../resourses/styles/styles.dart';
+import '../admain/password.dart';
 import '../contact/contact_us.dart';
 import '../favorite_screen/favorite_screen.dart';
 import '../location/location.dart';
@@ -24,12 +27,6 @@ class Profile_Screen extends StatefulWidget {
 class _Profile_ScreenState extends State<Profile_Screen> {
   Future<void> _refreshData(BuildContext context) async {
     AppCubit.get(context).getUserData(AppCubit.get(context).user_model?.id);
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
   }
 
   @override
@@ -122,7 +119,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                               profile_item(
                                   icon: Icons.payment_outlined,
                                   color: Colors.black,
-                                  text: 'Payment Methoud',
+                                  text: 'Payment Method',
                                   onTap: () {
                                     // AppConstants.navigateTo(
                                     //     context,
@@ -131,11 +128,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                                     // );
                                     AppConstants.navigateTo(
                                         context,
-                                        PaymentDetailsViewBody(
-                                          bedId: '',
-                                          snapshot: null,
-                                          price: 'Pay : 1000 EGP',
-                                        )
+                                        AddPaymentMethod()
                                     );
                                   }),
                               profile_item(
@@ -153,16 +146,28 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                                     AppConstants.navigateTo(context, Location_Screen());
                                   }),
                               profile_item(
+                                  icon: Icons.book,
+                                  color: Colors.brown,
+                                  text: 'Booked',
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const PasswordScreen(),
+                                        ),
+                                    );
+                                  }),
+                              profile_item(
                                   icon: Icons.logout_outlined,
                                   color: Colors.red,
                                   text: 'Log Out',
                                   onTap: () async{
+                                    await CacheHelper.sharedPreferences.setStringList('userData', []);
                                    await FirebaseAuth.instance.signOut().then((value)  {
                                      cubit. bottomNavIndex = 0;
                                      cubit.favorite_list = [];
-                                              AppConstants.navigateToAndFinish(
+                                     AppConstants.navigateToAndFinish(
                                                   context, Login_screen());
-                                            });
+                                   });
                                   }),
 
                             ],
