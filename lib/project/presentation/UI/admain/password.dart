@@ -43,11 +43,11 @@ class PasswordScreen extends StatelessWidget {
                 {
                   if(pin == '000000')
                     {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => DoctorsBooks(),
-                          ),
+                          )
                       );
                     }
                   else{

@@ -3,6 +3,7 @@ import 'package:buildcondition/buildcondition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pueri_project/project/presentation/resourses/network/local/casheHelper.dart';
 import '../../../../app/cubit/cubit.dart';
 import '../../../../app/cubit/state.dart';
 import '../../../resourses/constants/app_constants.dart';
@@ -53,6 +54,22 @@ class _Edit_ScreenState extends State<Edit_Screen> {
         phone_Controller.text = cubit.user_model!.phone!;
         date_Controller.text = cubit.user_model!.date_birth!;
         return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            leading:      InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Image.asset(
+                    'assets/images/back_arrow.png')),
+
+            title:   Text(
+              'Account',
+              style: Styles.semi_bold_16.copyWith(
+                  fontSize: 18,
+                  color: AppColors.primary),
+            ),
+          ),
           body: SafeArea(
             child: RefreshIndicator(
                 color: AppColors.primary,
@@ -72,40 +89,6 @@ class _Edit_ScreenState extends State<Edit_Screen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
-                                  children: [
-                                    InkWell(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Image.asset(
-                                            'assets/images/back_arrow.png')),
-                                    Text(
-                                      'Account',
-                                      style: Styles.semi_bold_16.copyWith(
-                                          fontSize: 18,
-                                          color: AppColors.primary),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 15),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(25),
-                                          color: AppColors.primary),
-                                      child: Text(
-                                        'Edit',
-                                        style: Styles.reguler_12
-                                            .copyWith(color: Colors.white),
-                                      ),
-                                    )
-                                  ],
-                                ),
                                 SizedBox(
                                   height: 20,
                                 ),
@@ -303,7 +286,7 @@ class _Edit_ScreenState extends State<Edit_Screen> {
                                   height: 20,
                                 ),
                                 Text(
-                                  'Data Of Birth Yor Baby ',
+                                  'Data Of Birth Your Baby ',
                                   style: Styles.semi_bold_14,
                                   textAlign: TextAlign.start,
                                 ),
@@ -401,7 +384,19 @@ class _Edit_ScreenState extends State<Edit_Screen> {
                                   height: 20,
                                 ),
                                 InkWell(
-                                  onTap: () {
+                                  onTap: () async {
+                                    String userId = CacheHelper.sharedPreferences.getStringList('userData')![0];
+                                    String email = CacheHelper.sharedPreferences.getStringList('userData')![3];
+                                    await CacheHelper.sharedPreferences.setStringList(
+                                        'userData',
+                                      [
+                                        userId,
+                                        firstName_Controller.text,
+                                        lastName_Controller.text,
+                                        email,
+                                      ],
+                                    );
+
                                     User_Model updated_model = User_Model(
                                         first_name: firstName_Controller.text,
                                         last_name: lastName_Controller.text,

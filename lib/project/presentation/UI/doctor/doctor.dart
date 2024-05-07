@@ -36,7 +36,6 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
         var cubit = AppCubit.get(context);
 
         return Scaffold(
-          appBar: AppBar(),
             body:
             SafeArea(
               child: Padding(
@@ -45,22 +44,21 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
                   onRefresh: () => _refreshData(context),
                   child: Column(
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 75,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Doctors',
-                              style: Styles.semi_bold_20
-                                  .copyWith(color: Colors.black),
-                            ),
-                            Image.asset('assets/images/logo.png'),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            'Doctors',
+                            style: Styles.semi_bold_20
+                                .copyWith(color: Colors.black),
+                          ),
+                          const Spacer(),
+                          SizedBox(
+                            // width: 90,
+                              height: 75,
+                              child: Image.asset('assets/images/logo.png')),
+                        ],
                       ),
+              
                       Row(
                         children: [
                           Expanded(
@@ -78,7 +76,7 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
                                 if (value == null || value.trim().isEmpty) {
                                   return 'please enter the search query ';
                                 }
-
+              
                                 return null;
                               },
                               decoration: InputDecoration(
@@ -99,7 +97,7 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25),
                                     borderSide: BorderSide(
-
+              
                                         color:   AppColors.primary),),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25))),
@@ -113,34 +111,6 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
                       ),
                       SizedBox(
                         height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          InkWell(
-                            onTap: () {
-
-                              Hospital_Model model_upload = Hospital_Model(
-                                topRated: true,
-                                avilable: 0,
-                                hospital_name: 'katr ElSheikh  Hospital',
-                                location:
-                                'Kafr El Sheikh, Kafr El Sheikh, ElGish Street',
-                                id: '',
-                                rate: 3,
-                                supported: false, price: '', location_place: '',
-                              );
-                              cubit.Upload_Hospital(model_upload);
-                            },
-                            child: SvgPicture.asset('assets/icons/location.svg',
-                                color: AppColors.primary),
-                          ),
-                          Text(
-                            ' Kafr ElSheikh',
-                            style: Styles.reguler_12
-                                .copyWith(color: AppColors.primary),
-                          ),
-                        ],
                       ),
                       SizedBox(
                         height: 20,

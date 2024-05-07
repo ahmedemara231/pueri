@@ -59,19 +59,28 @@ class _HomeLayoutState extends State<HomeLayout> {
               // ),
               items: [
                 BottomNavigationBarItem(
-                    icon: SvgPicture.asset('assets/icons/home.svg'),
+                    icon: SvgPicture.asset(
+                      'assets/icons/home.svg',
+                      color: cubit.bottomNavIndex == 0? Colors.black : Colors.white,
+                    ),
                     label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                    icon:SvgPicture.asset('assets/icons/doctor.svg'),
+                    icon:SvgPicture.asset('assets/icons/doctor.svg',
+                      color: cubit.bottomNavIndex == 1? Colors.black : Colors.white,
+                    ),
                     label: 'Doctor',
                 ),
                 BottomNavigationBarItem(
-                    icon:SvgPicture.asset('assets/icons/message.svg'),
+                    icon:SvgPicture.asset('assets/icons/message.svg',
+                      color: cubit.bottomNavIndex == 2? Colors.black : Colors.white,
+                    ),
                     label: 'Message'
                 ),
                 BottomNavigationBarItem(
-                    icon: SvgPicture.asset('assets/icons/profile.svg'),
+                    icon: SvgPicture.asset('assets/icons/profile.svg',
+                      color: cubit.bottomNavIndex == 3? Colors.black : Colors.white,
+                    ),
                     label: 'Profile'
                 ),
               ],

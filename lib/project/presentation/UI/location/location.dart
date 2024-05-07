@@ -58,6 +58,7 @@ class _Location_ScreenState extends State<Location_Screen> {
                               AppCubit.get(context).ChangeLocation(AppConstants.locations[index]);
                               print(AppConstants.locations[index]);
                               print(AppCubit.get(context).place_filter);
+                              Navigator.pop(context);
                             });
                           },
                         );

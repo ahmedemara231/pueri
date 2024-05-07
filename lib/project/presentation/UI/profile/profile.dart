@@ -88,20 +88,22 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '${cubit.user_model?.first_name} ${cubit.user_model?.last_name}',
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            '${CacheHelper.sharedPreferences.getStringList('userData')?[1]} ${cubit.user_model?.last_name}',
                                             style: Styles.semi_bold_16
                                                 .copyWith(color: Colors.black),
                                           ),
                                           Text(
-                                            '${cubit.user_model?.email}',
+                                            '${CacheHelper.sharedPreferences.getStringList('userData')?[3]}',
                                             style: Styles.reguler_12
                                                 .copyWith(fontSize: 11)
                                                 .copyWith(color: Colors.black),
                                           )
                                         ],
                                       ),
-                                      Spacer(),
-                                      Icon(Icons.arrow_forward_ios)
+                                      // Spacer(),
+                                      // Icon(Icons.arrow_forward_ios)
                                     ],
                                   ),
                                 ),
