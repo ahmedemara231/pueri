@@ -299,9 +299,13 @@ class _Register_screenState extends State<Register_screen> {
                             color: AppColors.primary,
                             onTap:  () {
                               if(formKey.currentState!.validate()){
-                                AppCubit.get(context).signUpAndStoreUserData(email: email_Controller.text,
-                                    first_name: '${firstName_Controller.text}',password: password_Controller.text, context: context, last_name: '${lastName_Controller.text}');
-
+                                AppCubit.get(context).signUpAndStoreUserData(
+                                    email: email_Controller.text,
+                                    first_name: '${firstName_Controller.text}',
+                                    password: password_Controller.text,
+                                    context: context,
+                                    last_name: '${lastName_Controller.text}'
+                                );
                               }
                             },
                             text:  'Sign Up',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pueri_project/project/presentation/UI/login/login_screen.dart';
 import '../../resourses/constants/app_constants.dart';
 import '../../resourses/models/onboard_model/onboard_model.dart';
 import '../../resourses/styles/colors.dart';
@@ -44,11 +45,11 @@ class _onboardingState extends State<onboarding> {
               itemBuilder: (context, index) {
                 return Column(
                   children: [
-                    Expanded(child: Container(
+                    Expanded(flex: 8, child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
                           color: AppColors.primary,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(104),
                               bottomRight:  Radius.circular(104)
                           )
@@ -56,9 +57,9 @@ class _onboardingState extends State<onboarding> {
                       child: Center(
                         child: Image.asset(onboardList[index].image!),
                       ),
-                    ), flex: 8),
+                    )),
                     Expanded(
-                flex: 2,
+                      flex: 2,
                       child: Container(
                           margin: EdgeInsets.all(20),
                           child: Text(
@@ -76,6 +77,7 @@ class _onboardingState extends State<onboarding> {
                             onTap:()async{
                               if (_currentIndex == onboardList.length - 1) {
                                 AppConstants.navigateToAndFinish(context, Loc_Permission());
+                                // AppConstants.navigateToAndFinish(context, Login_screen());
                               } else {
                                 _pageController.animateToPage(
                                   _getNextIndex(),
@@ -83,8 +85,6 @@ class _onboardingState extends State<onboarding> {
                                   curve: Curves.easeInExpo,
                                 );
                               }
-
-
                             },
                             child: Container(
                               margin: EdgeInsets.all(10),

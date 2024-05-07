@@ -20,11 +20,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
     _timer = Timer(const Duration(milliseconds: 600), _goNext);
   }
   _goNext() {
-
-
       AppConstants.navigateToAndFinish(context, AppConstants.onboarding ? FirebaseAuth.instance.currentUser!=null ? HomeLayout(): Login_screen():onboarding());
-
-
   }
 
   @override

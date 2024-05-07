@@ -8,13 +8,25 @@ import 'package:pueri_project/project/presentation/UI/login/login_screen.dart';
 import 'package:pueri_project/project/presentation/UI/profile/profile.dart';
 import 'package:pueri_project/project/presentation/resourses/network/local/casheHelper.dart';
 import '../presentation/UI/doctor/doctor.dart';
+import '../presentation/UI/onboarding/onboarding.dart';
 import '../presentation/UI/splash/splash.dart';
 import 'cubit/cubit.dart';
 import 'cubit/state.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    CacheHelper.sharedPreferences.setStringList('userData', []);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -25,7 +37,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             home:
             CacheHelper.sharedPreferences.getStringList('userData')!.isEmpty?
-            Login_screen  () : HomeLayout(),
+            onboarding() : HomeLayout(),
             debugShowCheckedModeBanner: false,
           );
         },

@@ -54,27 +54,34 @@ class AppCubit extends Cubit<AppState> {
   }) async {
     emit(SignUpLodingState());
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+      );
 
       String uid = userCredential.user!.uid;
       print(uid);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Login_screen(),), (route) => false);
 
-      await FirebaseFirestore.instance.collection('users').doc(uid).set({
-        'last_name': last_name,
-        'first_name': first_name,
-        'phone': '',
-        'date_birth': '',
-        'favorites': [],
-        'email': email,
-        'password': password,
-        'id': uid,
-      }).then((value) {
+     await FirebaseFirestore.instance.collection('users').doc(uid).set(
+          {
+            'last_name': last_name,
+            'first_name': first_name,
+            'phone': '',
+            'date_birth': '',
+            'favorites': [],
+            'email': email,
+            'password': password,
+            'id': uid,
+          },
+      ).then((value)
+      {
         emit(GetUserDataLodingState());
-        getUserData(FirebaseAuth.instance.currentUser?.uid);
+
+        // late User_Model registeredUser;
+        // getUserData(FirebaseAuth.instance.currentUser?.uid);
         emit(SignUpSucssesState());
       });
-
       print('User signed up and data stored successfully');
     } catch (e) {
       emit(SignUpErrorState());

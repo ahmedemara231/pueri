@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pueri_project/project/presentation/resourses/styles/colors.dart';
 import '../../../app/cubit/cubit.dart';
 import '../../../app/cubit/state.dart';
 import '../../resourses/constants/app_constants.dart';
@@ -36,9 +37,6 @@ class _Message_ScreenState extends State<Message_Screen> {
 
         return Scaffold(
             body:
-            // Container(
-            //   color: Colors.white,
-            // )
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -75,15 +73,40 @@ class _Message_ScreenState extends State<Message_Screen> {
                         child: ListView.builder(
                           itemCount: AppConstants.doctors.length,
                           itemBuilder: (context, index) {
-
-                            return Messages_widget( message: 'مرحبا', date: '12:50', num: 1,
-                              name:AppConstants.doctors[index].name ,
-                              image_link:AppConstants.doctors[index].image, onTap: () {
-                              AppConstants.navigateTo(context, Message_Details_Screen(name:AppConstants.doctors[index].name ,
-                                  image:AppConstants.doctors[index].image));
-
-                              },
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () {
+                                  AppConstants.navigateTo(context, Message_Details_Screen(name:AppConstants.doctors[index].name ,
+                                            image:AppConstants.doctors[index].image));
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(color: AppColors.primary),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListTile(
+                                      leading: CircleAvatar(
+                                        backgroundImage: AssetImage(AppConstants.doctors[index].image!),
+                                      ),
+                                      title: Text(AppConstants.doctors[index].name!,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                                      trailing: const Icon(Icons.arrow_forward),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             );
+                            // return Messages_widget( message: 'مرحبا', date: '12:50', num: 1,
+                            //   name:AppConstants.doctors[index].name ,
+                            //   image_link:AppConstants.doctors[index].image,
+                            //   onTap: () {
+                            //   AppConstants.navigateTo(context, Message_Details_Screen(name:AppConstants.doctors[index].name ,
+                            //       image:AppConstants.doctors[index].image));
+                            //
+                            //   },
+                            // );
                           },
                         ),
                       ),

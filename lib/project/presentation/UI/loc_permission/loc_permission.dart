@@ -19,15 +19,19 @@ class _Loc_PermissionState extends State<Loc_Permission> {
     // TODO: implement initState
     super.initState();
     Permission.location.request().then((value) {
-      if(value.isDenied){
-        AppConstants.exitApp();
-      }
-      if(value.isGranted){
+      // if(value.isDenied){
+      //   AppConstants.exitApp();
+      // }
+      // if(value.isGranted){
+      //   setState(() {
+      //     CacheHelper.SavaData(key: 'onboard', value: true);
+      //   });
+      //   AppConstants.navigateToAndFinish(context, Login_screen());
+      // }
       setState(() {
         CacheHelper.SavaData(key: 'onboard', value: true);
       });
-        AppConstants.navigateToAndFinish(context, Login_screen());
-      }
+      AppConstants.navigateToAndFinish(context, Login_screen());
     });
   }
   @override

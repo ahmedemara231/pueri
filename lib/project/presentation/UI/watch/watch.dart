@@ -21,13 +21,6 @@ class _Watch_ScreenState extends State<Watch_Screen> {
 
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-
-  }
   var controler = TextEditingController();
   @override
   Widget build(BuildContext context) {
