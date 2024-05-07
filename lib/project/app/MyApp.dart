@@ -24,7 +24,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    CacheHelper.sharedPreferences.setStringList('userData', []);
     super.initState();
   }
   @override
@@ -36,7 +35,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, state) {
           return MaterialApp(
             home:
-            CacheHelper.sharedPreferences.getStringList('userData')!.isEmpty?
+            CacheHelper.sharedPreferences.getStringList('userData') == null?
             onboarding() : HomeLayout(),
             debugShowCheckedModeBanner: false,
           );

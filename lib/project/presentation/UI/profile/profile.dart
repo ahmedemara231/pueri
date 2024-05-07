@@ -163,7 +163,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                                   color: Colors.red,
                                   text: 'Log Out',
                                   onTap: () async{
-                                    await CacheHelper.sharedPreferences.setStringList('userData', []);
+                                    await CacheHelper.sharedPreferences.clear();
                                    await FirebaseAuth.instance.signOut().then((value)  {
                                      cubit. bottomNavIndex = 0;
                                      cubit.favorite_list = [];

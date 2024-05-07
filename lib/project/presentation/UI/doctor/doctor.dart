@@ -59,55 +59,48 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
                         ],
                       ),
               
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              style: Styles.semi_bold_14,
-                              controller: searchControler,
-                              maxLines: 1,
-                              minLines: null,
-                              onChanged: (v){
-                                setState(() {
-                                  searchControler.text = v;
-                                });
-                              },
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'please enter the search query ';
-                                }
-              
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                  prefixIcon:
-                                  Image.asset('assets/images/search.png'),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                      borderSide:
-                                      BorderSide(color: AppColors.primary)),
-                                  errorBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                      borderSide: BorderSide(color: Colors.red)),
-                                  disabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                      borderSide:
-                                      BorderSide(color: AppColors.primary)),
-                                  hintText: 'Search',
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                    borderSide: BorderSide(
-              
-                                        color:   AppColors.primary),),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25))),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Image.asset('assets/images/notification.png')
-                        ],
+                      TextFormField(
+                        style: Styles.semi_bold_14,
+                        controller: searchControler,
+                        maxLines: 1,
+                        minLines: null,
+                        onChanged: (v){
+                          setState(() {
+                            searchControler.text = v;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'please enter the search query ';
+                          }
+
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            prefixIcon:
+                            Image.asset('assets/images/search.png'),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide:
+                                BorderSide(color: AppColors.primary)),
+                            errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(color: Colors.red)),
+                            disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide:
+                                BorderSide(color: AppColors.primary)),
+                            hintText: 'Search',
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(
+
+                                  color:   AppColors.primary),),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25))),
+                      ),
+                      SizedBox(
+                        width: 20,
                       ),
                       SizedBox(
                         height: 10,
@@ -121,18 +114,6 @@ class _Doctor_ScreenState extends State<Doctor_Screen> {
                           Text(
                             '',
                             style: Styles.semi_bold_14,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              AppConstants.navigateTo(context, Doctor_View_All());
-                            },
-                            child: Text(
-                              'View All',
-                              style: Styles.semi_bold_14.copyWith(
-                                  color: AppColors.primary,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: AppColors.primary),
-                            ),
                           ),
                         ],
                       ),

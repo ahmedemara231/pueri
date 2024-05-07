@@ -165,16 +165,23 @@ class AppCubit extends Cubit<AppState> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        CacheHelper.sharedPreferences.setStringList(
-            'userData',
-            [
-              user_model!.id!,
-              user_model!.first_name!,
-              user_model!.last_name!,
-              user_model!.email!,
-            ],
-        );
+          .then((value)async {
+            await FirebaseFirestore.instance.collection('users').doc(value.user?.uid)
+            .get()
+            .then((value)
+            {
+              CacheHelper.sharedPreferences.setStringList(
+                'userData',
+                [
+                  value.id,
+                  value.data()?['first_name'],
+                  value.data()?['last_name'],
+                  value.data()?['email'],
+                ],
+              );
+            });
+
+
         print(CacheHelper.sharedPreferences.getStringList('userData')?[0]);
         emit(GetUserDataLodingState());
         getUserData(value.user?.uid);

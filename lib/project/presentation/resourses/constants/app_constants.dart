@@ -57,13 +57,20 @@ class AppConstants {
 doctorModel(
     image: 'assets/images/ahmed.png',
   name: 'DR.Ahmed'
-    ),doctorModel(
+    ),
+    doctorModel(
     image: 'assets/images/omar.png',
   name: 'DR.Omar'
-    ),doctorModel(
-    image: 'assets/images/nada.png',
-  name: 'DR.Nada'
     ),
+
+
+
+    doctorModel(image: 'assets/images/nada.png', name: 'DR.Nada'),
+
+
+
+
+
   ];
 
   static  final List<String> notificationMessages = [];
