@@ -40,7 +40,8 @@ class AppCubit extends Cubit<AppState> {
 
   void ChangeLocation(place) {
     place_filter = place;
-    initSearchListBasedOnLocation();
+    finalList = topRated.where((element) => element.location == place_filter).toList();
+    finalListFiltering = List.from(finalList);
     emit(changeLocationState());
   }
 
@@ -307,70 +308,106 @@ class AppCubit extends Cubit<AppState> {
   List<Hospital_Model> topratedList = [];
   List<Hospital_Model> searchOnTopRatedBasedOnLocation = [];
 
-  void initSearchListBasedOnLocation()
-  {
-    searchOnTopRatedBasedOnLocation = [];
+  // void initSearchListBasedOnLocation()
+  // {
+  //   searchOnTopRatedBasedOnLocation = [];
+  //
+  //   topRated.forEach((element) {
+  //     log('location : ${element.location}');
+  //
+  //     if(element.location == place_filter)
+  //       {
+  //         searchOnTopRatedBasedOnLocation.add(element);
+  //       }
+  //   });
+  //   log('help$searchOnTopRatedBasedOnLocation');
+  //
+  //   emit(InitSearchListBasedOnLocation());
+  // }
 
-    toprated.forEach((element) {
-      log('location : ${element.location}');
+  // void search(String pattern)
+  // {
+  //   if(pattern.isEmpty)
+  //     {
+  //       topratedList = List.from(topRated);
+  //       print(topratedList);
+  //       emit(state);
+  //     }
+  //   else{
+  //     topratedList = searchOnTopRatedBasedOnLocation.where((element) => element.hospital_name!.contains(pattern)).toList();
+  //     print(topratedList);
+  //     emit(state);
+  //   }
+  // }
 
-      if(element.location == place_filter)
-        {
-          searchOnTopRatedBasedOnLocation.add(element);
-        }
-    });
-    log('help$searchOnTopRatedBasedOnLocation');
-
-    emit(InitSearchListBasedOnLocation());
-  }
-
-  void search(String pattern)
-  {
-    if(pattern.isEmpty)
-      {
-        topratedList = List.from(toprated);
-        print(topratedList);
-        emit(state);
-      }
-    else{
-      topratedList = searchOnTopRatedBasedOnLocation.where((element) => element.hospital_name!.contains(pattern)).toList();
-      print(topratedList);
-      emit(state);
-    }
-  }
 
 
   List<Hospital_Model> hospitals = [];
-  List<Hospital_Model> toprated = [];
+  List<Hospital_Model> topRated = [];
   List<Hospital_Model> favorite_list = [];
+
+  List<Hospital_Model> finalList = [];
+  List<Hospital_Model> finalListFiltering = [];
 
   Future<void> Get_Hospital() async {
     hospitals = [];
-    toprated = [];
+    topRated = [];
     favorite_list = [];
 
     emit(get_Hos_LoadingState());
     await FirebaseFirestore.instance.collection('hospitals').get().then((value) {
-      value.docs.forEach((element) {
+      value.docs.forEach((element) async{
+
+        if(element.data()['location'] == 'Kafr ElSheikh')
+          {
+            print('Kafr ElSheikh');
+          }
         hospitals.add(Hospital_Model.fromJson(element.data(),element.id));
+
         if (element.data()['topRated']) {
-          toprated.add(Hospital_Model.fromJson(element.data(),element.id));
+          topRated.add(Hospital_Model.fromJson(element.data(),element.id));
         }
+
         if (user_model!.favorites!.contains(element.id)) {
           favorite_list.add(Hospital_Model.fromJson(element.data(),element.id));
         }
       });
 
-      topratedList = List.from(toprated);
+      topratedList = List.from(topRated);
+
+      finalList = topRated.where((element) => element.location == place_filter).toList();
+      finalListFiltering = List.from(finalList);
+
       emit(get_Hos_SucssesState());
 
-      initSearchListBasedOnLocation();
+      // initSearchListBasedOnLocation();
 
     }).catchError((e) {
       print(e.toString());
       emit(get_Hos_ErrorState());
     });
   }
+
+  void search(String pattern)
+  {
+    if(pattern.isEmpty)
+    {
+      finalListFiltering = List.from(finalList);
+      emit(state);
+    }
+    else{
+      finalListFiltering = finalList.where((element) => element.hospital_name!.contains(pattern)).toList();
+      emit(state);
+    }
+  }
+
+
+  // List<Hospital_Model> topRatedList2 = [];
+  // void filterLocations()
+  // {
+  //   topRatedList2 =  topRated.where((element) => element.location == place_filter).toList();
+  //   emit(MakeTopRatedBasedOnLocation());
+  // }
 
 
   Future<void> bookDateWithDoctor({

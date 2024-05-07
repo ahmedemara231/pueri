@@ -26,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Future<void> _refreshData(BuildContext context) async {
     await AppCubit.get(context).getUserData(FirebaseAuth.instance.currentUser?.uid);
+    // await AppCubit.get(context).getTopRatedBasedOnLocation();
     await AppCubit.get(context).Get_Hospital();
   }
 
@@ -45,7 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {},
       builder: (context, state) {
-
         return Scaffold(
             body: SafeArea(
               child: Padding(
@@ -189,15 +189,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CircularProgressIndicator(),
                         )
                       : Expanded(
-                          child: cubit.topratedList.isEmpty?
+                          child: cubit.finalListFiltering.isEmpty?
 
                           const Center(
                             child: Text('No results',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25),),
                           ) :
                           ListView.builder(
-                            itemCount: cubit.topratedList.length,
+                            itemCount: cubit.finalListFiltering.length,
                             itemBuilder: (context, index) {
-                              // final hospital = cubit.topratedList[index];
+                              // final hospital = cubit.finalListFiltering[index];
                               // if (searchControler.text.isNotEmpty && hospital.hospital_name.contains(searchControler.text)) { // <-- Add this line
                               //   return SizedBox.shrink();
                               //   // Skip this item if it does not match the search query
@@ -206,18 +206,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               // }
                               return InkWell(
                                 onTap: (){
-                                  AppConstants.navigateTo(context, Home_Widget_Screen(model:cubit.topratedList[index]));
+                                  AppConstants.navigateTo(context, Home_Widget_Screen(model:cubit.finalListFiltering[index]));
                                 },
                                 child: StreamBuilder(
-                                  stream: FirebaseFirestore.instance.collection('hospitals').doc(cubit.topratedList[index].id).snapshots(),
+                                  stream: FirebaseFirestore.instance.collection('hospitals').doc(cubit.finalListFiltering[index].id).snapshots(),
                                   builder: (context, snapshot) {
                                     return Home_widget(
                                       hospital_name:
-                                      '${cubit.topratedList[index].hospital_name}',
+                                      '${cubit.finalListFiltering[index].hospital_name}',
                                       beds: snapshot.data?.data()?['avilable'],
-                                      id: cubit.topratedList[index].id!,
-                                      location: '${cubit.topratedList[index].location}',
-                                      rate: cubit.topratedList[index].rate!,
+                                      id: cubit.finalListFiltering[index].id!,
+                                      location: '${cubit.finalListFiltering[index].location}',
+                                      rate: cubit.finalListFiltering[index].rate!,
                                     );
                                   }
                                 ),

@@ -28,7 +28,7 @@ class Hospital_Model {
       avilable: json['avilable'],
       hospital_name: json['hospital_name'],
       id: id,
-      location: json['location'] + ', ' + json['subLocation'],
+      location: json['location'],
       price: json['price'],
       rate: json['rate'],
       topRated: json['topRated'],

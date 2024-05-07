@@ -67,7 +67,7 @@ class _Message_ScreenState extends State<Message_Screen> {
                         height: 10,
                       ),
 
-                      cubit.toprated.isEmpty
+                      cubit.topRated.isEmpty
                           ? Center(
                         child: CircularProgressIndicator(),
                       )

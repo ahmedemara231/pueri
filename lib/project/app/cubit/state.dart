@@ -30,6 +30,7 @@ class Upload_Hos_ErrorState extends AppState {}
 class get_Hos_LoadingState extends AppState {}
 class get_Hos_SucssesState extends AppState {}
 class get_Hos_ErrorState extends AppState {}
+class MakeTopRatedBasedOnLocation extends AppState {}
 
 //get doctors dates
 class GetDoctorsDatesLoading extends AppState {}
