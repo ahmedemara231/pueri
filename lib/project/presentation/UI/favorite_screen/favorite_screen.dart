@@ -87,14 +87,14 @@ class _Favorite_ScreenState extends State<Favorite_Screen> {
                         }
                         return InkWell(
                           onTap: (){
-                            AppConstants.navigateTo(context, Home_Widget_Screen(model:cubit.hospitals[index]));
+                            AppConstants.navigateTo(context, Home_Widget_Screen(model:cubit.favorite_list[index]));
                           },
                           child: Home_widget(
                             hospital_name:
                             '${cubit.favorite_list[index].hospital_name}',
                             beds: cubit.favorite_list[index].avilable!,
                             id: cubit.favorite_list[index].id!,
-                            location: '${cubit.favorite_list[index].location}',
+                            location: '${cubit.favorite_list[index].location}, ${cubit.favorite_list[index].subLocation}',
                             rate: cubit.favorite_list[index].rate!,
                           ),
                         );},

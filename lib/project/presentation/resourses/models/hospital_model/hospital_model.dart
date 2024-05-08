@@ -8,6 +8,7 @@ class Hospital_Model {
   String? location_place;
   String? hospital_name;
   bool? topRated;
+  String? subLocation;
 
   // Constructor
   Hospital_Model({
@@ -20,6 +21,7 @@ class Hospital_Model {
     required this.topRated,
     required this.avilable,
     required this.rate,
+    this.subLocation,
   });
 
   // Factory method to create a User object from a JSON map
@@ -34,6 +36,7 @@ class Hospital_Model {
       topRated: json['topRated'],
       supported: json['supported'],
       location_place: json['location_place'],
+      subLocation: json['subLocation']
     );
   }
 

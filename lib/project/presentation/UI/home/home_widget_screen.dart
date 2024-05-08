@@ -61,7 +61,7 @@ class _Home_Widget_ScreenState extends State<Home_Widget_Screen> {
                             '${widget.model?.hospital_name}',
                             beds: snapshot.data?.data()?['avilable'],
                             id: widget.model?.id!,
-                            location: '${widget.model?.location}',
+                            location: '${widget.model?.location}, ${widget.model?.subLocation}',
                             rate: widget.model?.rate!,
                           ),
                           SizedBox(

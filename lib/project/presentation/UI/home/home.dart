@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       '${cubit.finalListFiltering[index].hospital_name}',
                                       beds: snapshot.data?.data()?['avilable'],
                                       id: cubit.finalListFiltering[index].id!,
-                                      location: '${cubit.finalListFiltering[index].location}',
+                                      location: '${cubit.finalListFiltering[index].location}, ${cubit.finalListFiltering[index].subLocation}',
                                       rate: cubit.finalListFiltering[index].rate!,
                                     );
                                   }
